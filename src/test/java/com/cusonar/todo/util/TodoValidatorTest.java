@@ -52,31 +52,35 @@ public class TodoValidatorTest {
 	
 	@Test
 	public void isCircularReferenceTest_references가_null_일때_false() {
-		List<Todo> references = Arrays.asList(new Todo(1L), new Todo(2L));
+		Todo todo = new Todo(1L, "todo", false, new Todo(2L), new Todo(3L));
 		List<Todo> referencedTodos = null;
-		assertFalse(TodoValidator.isCircularReference(references, referencedTodos));
+		assertFalse(TodoValidator.isCircularReference(todo, referencedTodos));
 	}
 	
 	@Test
 	public void isCircularReferenceTest_referenced가_null_일때_false() {
-		List<Todo> references = null;
+		Todo todo = new Todo(1L, "todo", false);
 		List<Todo> referencedTodos = Arrays.asList(new Todo(1L), new Todo(2L));
-		assertFalse(TodoValidator.isCircularReference(references, referencedTodos));
+		assertFalse(TodoValidator.isCircularReference(todo, referencedTodos));
 	}
 	
 	@Test
 	public void isCircularReferenceTest_null_아닐때_false() {
-		List<Todo> references = Arrays.asList(new Todo(1L), new Todo(2L));
-		List<Todo> referencedTodos = Arrays.asList(new Todo(3L), new Todo(4L));
-		assertFalse(TodoValidator.isCircularReference(references, referencedTodos));
+		Todo todo = new Todo(1L, "todo", false, new Todo(2L), new Todo(3L));
+		List<Todo> referencedTodos = Arrays.asList(new Todo(4L), new Todo(5L));
+		assertFalse(TodoValidator.isCircularReference(todo, referencedTodos));
 	}
 	
 	@Test
 	public void isCircularReferenceTest_true() {
-		List<Todo> references = Arrays.asList(new Todo(1L), new Todo(2L));
-		List<Todo> referencedTodos = Arrays.asList(new Todo(2L), new Todo(3L));
-		assertTrue(TodoValidator.isCircularReference(references, referencedTodos));
+		Todo todo = new Todo(1L, "todo", false, new Todo(2L), new Todo(3L));
+		List<Todo> referencedTodos = Arrays.asList(new Todo(3L), new Todo(4L));
+		assertTrue(TodoValidator.isCircularReference(todo, referencedTodos));
 	}
 	
-	
+	@Test
+	public void isCircularReferenceTest_셀프참조() {
+		Todo todo = new Todo(1L, "todo", false, new Todo(1L));
+		assertTrue(TodoValidator.isCircularReference(todo, null));
+	}
 }

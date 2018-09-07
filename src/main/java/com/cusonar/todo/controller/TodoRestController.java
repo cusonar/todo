@@ -85,7 +85,7 @@ public class TodoRestController {
 		}
 		
 		List<Todo> referencedTodos = todoService.findByReferencesIn(Arrays.asList(oldTodo.get()));
-		if (TodoValidator.isCircularReference(newTodo.getReferences(), referencedTodos)) {
+		if (TodoValidator.isCircularReference(newTodo, referencedTodos)) {
 			throw new TodoReferenceException("Referenced todo CAN NOT refer(Circular Reference)");
 		}
 		if (newTodo.isCompleted() && !TodoValidator.isAll(referencedTodos, true)) {

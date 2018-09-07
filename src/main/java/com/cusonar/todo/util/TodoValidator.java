@@ -22,8 +22,20 @@ public class TodoValidator {
 		return true;
 	}
 	
-	public static boolean isCircularReference(List<Todo> references, List<Todo> referencedTodos) {
-		if (references == null || referencedTodos == null) {
+	public static boolean isCircularReference(Todo newTodo, List<Todo> referencedTodos) {
+		List<Todo> references = newTodo.getReferences();
+		
+		if (references == null) {
+			return false;
+		}
+		
+		for (Todo reference : references) {
+			if (newTodo.getTodoId() == reference.getTodoId()) {
+				return true;
+			}
+		}
+		
+		if (referencedTodos == null) {
 			return false;
 		}
 		
