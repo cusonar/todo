@@ -55,6 +55,10 @@ java -jar todo-1.0.0-RELEASE.jar
 ./gradlew bootRun
 ```
 
+```
+http://localhost:8080
+```
+
 ## Authors
 
 Chanung Yun(cu.sonar@gmail.com)
